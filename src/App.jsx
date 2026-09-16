@@ -631,11 +631,37 @@ function Portfolio() {
   );
 }
 
+function NavBar() {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <div 
+      className="nav-trigger" 
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+    >
+      <nav className={`navbar ${visible ? 'is-visible' : ''}`}>
+        <div className="navbar-links">
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'}); }}>About</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); document.querySelector('.portfolio')?.scrollIntoView({behavior: 'smooth'}); }}>Projects</a>
+        </div>
+        <a href="https://www.linkedin.com/in/chloe-jyl" target="_blank" rel="noreferrer" className="nav-connect-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 2.99H2C1.45 2.99 1.01 3.44 1.01 3.99L1 19.99C1 20.54 1.45 20.99 2 20.99H22C22.55 20.99 23 20.54 23 19.99V3.99C23 3.44 22.55 2.99 22 2.99ZM22 7.08L12 13.34L2 7.08V4.99L12 11.24L22 4.99V7.08Z" fill="currentColor"/>
+          </svg>
+          Connect
+        </a>
+      </nav>
+    </div>
+  );
+}
+
 export default function App() {
   const [loading, setLoading] = useState(true);
 
   return (
     <div className="site-shell">
+      <NavBar />
       <Hero />
       <Portfolio />
       {loading && <Loader onComplete={() => setLoading(false)} />}

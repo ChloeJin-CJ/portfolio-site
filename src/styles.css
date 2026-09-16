@@ -14,6 +14,73 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Navigation Bar */
+.nav-trigger {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  z-index: 9999;
+}
+
+.navbar {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%, -150%);
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 8px 8px 8px 32px;
+  border-radius: 40px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05), inset 0 0 0 1.5px rgba(255, 255, 255, 0.6);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.navbar.is-visible {
+  transform: translate(-50%, 0);
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: #1c1917;
+  font-weight: 500;
+  font-size: 15px;
+  transition: opacity 0.2s;
+}
+
+.navbar-links a:hover {
+  opacity: 0.6;
+}
+
+.nav-connect-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #1c1917;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 15px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.nav-connect-btn:hover {
+  background: #f0f0f0;
+  transform: scale(1.02);
+}
+
 html,
 body,
 #root {
@@ -670,11 +737,12 @@ img {
 
 .portfolio-gems-left {
   left: -14%;
-  clip-path: polygon(22% 0, 100% 0, 100% 100%, 0 100%, 0 7%, 22% 7%);
+  clip-path: polygon(22% 0, 100% 0, 100% 85%, 0 85%, 0 7%, 22% 7%);
 }
 
 .portfolio-gems-right {
   right: -1.5%;
+  clip-path: polygon(0 0, 100% 0, 100% 86%, 0 86%);
 }
 
 .portfolio-intro {
@@ -1243,6 +1311,8 @@ img {
   .flowers-object { right: 31%; bottom: 7%; width: 11vw; }
   .bling-object { width: 34vw; }
   .portfolio-gems { width: 36vw; }
+  .portfolio-gems-left { left: -35%; }
+  .portfolio-gems-right { right: -20%; }
   .project-card-1 { transform: translate(-180px, 24px) rotate(-5deg); }
   .project-card-2 { transform: translate(-60px, 8px) rotate(-2deg); }
   .project-card-3 { transform: translate(60px, 8px) rotate(2deg); }
@@ -1359,8 +1429,8 @@ img {
     opacity: 0.9;
   }
 
-  .portfolio-gems-left { left: -34%; }
-  .portfolio-gems-right { right: -17%; }
+  .portfolio-gems-left { left: -50%; }
+  .portfolio-gems-right { right: -35%; }
 
   .portfolio-intro {
     width: calc(100% - 42px);
