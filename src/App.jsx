@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import DrawSVGPlugin from "gsap/DrawSVGPlugin";
@@ -162,11 +162,7 @@ function CameraPortrait() {
 function StickyNote() {
   return (
     <div className="sticky-object hero-item" data-hero="right">
-      <img src={`${ASSET}sticky-note.png`} alt="" draggable="false" />
-      <div className="sticky-copy">
-        <p>Hi! <span aria-hidden="true">👋</span> I&apos;m Chloe, a UBC CS student driven by an adventurous spirit and endless curiosity.</p>
-        <p>I love the quiet magic of the creative process&mdash;turning abstract ideas into useful tools that make a real difference for others.</p>
-      </div>
+      <img src={`${ASSET}sticky-note-with-text.png`} alt="Sticky note about Chloe" draggable="false" />
     </div>
   );
 }
@@ -226,10 +222,10 @@ function BoardingPass() {
 
   return (
     <div className="ticket-object hero-item" data-hero="up" ref={root}>
-      <div className="ticket-card" ref={card}>
+      <a href="/Chloe_Resume.pdf" target="_blank" rel="noreferrer" className="ticket-card" ref={card} aria-label="View Resume">
         <img src={`${ASSET}boarding-pass-continuous-learner.png`} alt="Boarding pass from UBC to Software Engineer or ML Engineer, class Continuous Learner" draggable="false" />
         <span className="ticket-shine" aria-hidden="true" ref={shine} />
-      </div>
+      </a>
     </div>
   );
 }
@@ -632,25 +628,39 @@ function Portfolio() {
 }
 
 function NavBar() {
-  const [visible, setVisible] = useState(false);
+  const [connectOpen, setConnectOpen] = useState(false);
 
   return (
-    <div 
-      className="nav-trigger" 
-      onMouseEnter={() => setVisible(true)}
-      onMouseLeave={() => setVisible(false)}
-    >
-      <nav className={`navbar ${visible ? 'is-visible' : ''}`}>
+    <div className="nav-container">
+      <nav className="navbar">
         <div className="navbar-links">
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'}); }}>About</a>
           <a href="#" onClick={(e) => { e.preventDefault(); document.querySelector('.portfolio')?.scrollIntoView({behavior: 'smooth'}); }}>Projects</a>
         </div>
-        <a href="https://www.linkedin.com/in/chloe-jyl" target="_blank" rel="noreferrer" className="nav-connect-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 2.99H2C1.45 2.99 1.01 3.44 1.01 3.99L1 19.99C1 20.54 1.45 20.99 2 20.99H22C22.55 20.99 23 20.54 23 19.99V3.99C23 3.44 22.55 2.99 22 2.99ZM22 7.08L12 13.34L2 7.08V4.99L12 11.24L22 4.99V7.08Z" fill="currentColor"/>
-          </svg>
-          Connect
-        </a>
+        
+        <div 
+          className="nav-connect-wrapper"
+          onMouseEnter={() => setConnectOpen(true)}
+          onMouseLeave={() => setConnectOpen(false)}
+        >
+          <button className="nav-connect-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 2.99H2C1.45 2.99 1.01 3.44 1.01 3.99L1 19.99C1 20.54 1.45 20.99 2 20.99H22C22.55 20.99 23 20.54 23 19.99V3.99C23 3.44 22.55 2.99 22 2.99ZM22 7.08L12 13.34L2 7.08V4.99L12 11.24L22 4.99V7.08Z" fill="currentColor"/>
+            </svg>
+            Connect
+          </button>
+          <div className={`nav-connect-dropdown ${connectOpen ? 'is-open' : ''}`}>
+            <a href="https://www.linkedin.com/in/chloe-jyl" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M18.5 18.5V13.2A3.26 3.26 0 0 0 15.24 9.94C14.39 9.94 13.4 10.46 12.92 11.24V10.13H10.13V18.5H12.92V13.57C12.92 12.8 13.54 12.17 14.31 12.17A1.4 1.4 0 0 1 15.71 13.57V18.5H18.5M6.88 8.56A1.68 1.68 0 0 0 8.56 6.88C8.56 5.95 7.81 5.19 6.88 5.19A1.69 1.69 0 0 0 5.19 6.88C5.19 7.81 5.95 8.56 6.88 8.56M8.27 18.5V10.13H5.5V18.5H8.27Z"/></svg>
+            </a>
+            <a href="https://github.com/ChloeJin-CJ" target="_blank" rel="noreferrer" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21V19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26V21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"/></svg>
+            </a>
+            <a href="mailto:chloejin.cj@gmail.com" aria-label="Email">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z"/></svg>
+            </a>
+          </div>
+        </div>
       </nav>
     </div>
   );

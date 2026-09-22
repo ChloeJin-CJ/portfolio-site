@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
   color: #1c1917;
   background: #faf8f5;
   font-family: "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
@@ -15,12 +16,11 @@ html {
 }
 
 /* Navigation Bar */
-.nav-trigger {
+.nav-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100px;
   z-index: 9999;
 }
 
@@ -28,7 +28,7 @@ html {
   position: absolute;
   top: 20px;
   left: 50%;
-  transform: translate(-50%, -150%);
+  transform: translate(-50%, 0);
   display: flex;
   align-items: center;
   gap: 2.5rem;
@@ -38,11 +38,6 @@ html {
   padding: 8px 8px 8px 32px;
   border-radius: 40px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05), inset 0 0 0 1.5px rgba(255, 255, 255, 0.6);
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.navbar.is-visible {
-  transform: translate(-50%, 0);
 }
 
 .navbar-links {
@@ -68,17 +63,58 @@ html {
   gap: 8px;
   background: #ffffff;
   color: #1c1917;
-  text-decoration: none;
+  border: none;
+  cursor: pointer;
   padding: 12px 24px;
   border-radius: 30px;
   font-weight: 500;
   font-size: 15px;
   transition: transform 0.2s, background 0.2s;
+  font-family: inherit;
 }
 
 .nav-connect-btn:hover {
   background: #f0f0f0;
   transform: scale(1.02);
+}
+
+.nav-connect-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-connect-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  display: flex;
+  gap: 16px;
+  background: #ffffff;
+  padding: 10px 18px;
+  border-radius: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-connect-dropdown.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(8px);
+}
+
+.nav-connect-dropdown a {
+  display: flex;
+  color: #1c1917;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.nav-connect-dropdown a:hover {
+  color: #0b278e;
+  transform: scale(1.15);
 }
 
 html,
@@ -247,7 +283,7 @@ img {
 }
 
 .books-object {
-  z-index: 9;
+  z-index: 11;
   top: 8.2%;
   left: 66%;
   width: clamp(140px, min(10.5vw, 21svh), 215px);
@@ -347,14 +383,15 @@ img {
 }
 
 .sticky-object {
-  z-index: 8;
-  top: 13%;
-  right: 3.5%;
-  width: clamp(350px, min(28vw, 58svh), 600px);
+  z-index: 10;
+  top: 11%;
+  right: 4.5%;
+  width: clamp(300px, min(44vw, 60svh), 560px);
   aspect-ratio: 1;
-  transform: rotate(5.8deg);
-  filter: drop-shadow(0 12px 11px rgba(55, 43, 22, 0.12));
-  transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: rotate(0deg);
+  filter: drop-shadow(4px 10px 12px rgba(0, 0, 0, 0.25));
+  transition: transform 420ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 420ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: grab;
 }
 
 .sticky-object > img {
@@ -364,33 +401,11 @@ img {
   height: 100%;
 }
 
-.sticky-copy {
-  position: absolute;
-  z-index: 2;
-  top: 19%;
-  left: 11.5%;
-  width: 77%;
-  padding-inline: 0.4em;
-  color: #17120b;
-  font-family: "Chalkboard SE", "Comic Sans MS", "Bradley Hand", cursive;
-  font-size: clamp(16px, 1.3vw, 25px);
-  font-weight: 600;
-  letter-spacing: 0;
-  line-height: 1.48;
-  text-align: center;
-}
 
-.sticky-copy p {
-  margin: 0;
-  text-wrap: pretty;
-}
-
-.sticky-copy p + p {
-  margin-top: 0.72em;
-}
 
 .sticky-object:hover {
-  transform: rotate(3.5deg) translateY(-8px);
+  transform: rotate(-2.5deg) translateY(-8px);
+  filter: drop-shadow(8px 18px 20px rgba(0, 0, 0, 0.2));
 }
 
 .bling-object {
@@ -405,13 +420,14 @@ img {
 .ticket-object {
   z-index: 11;
   bottom: clamp(76px, 8.5svh, 96px);
-  left: 24%;
+  left: 19%;
   width: clamp(470px, min(39vw, 68svh), 760px);
-  cursor: zoom-in;
+  cursor: pointer;
 }
 
 .ticket-card {
   position: relative;
+  display: block;
   width: 100%;
   overflow: hidden;
   border-radius: 16px;
@@ -439,7 +455,7 @@ img {
 .turntable-object {
   z-index: 13;
   bottom: 2.5%;
-  left: 6.5%;
+  left: 1.5%;
   width: clamp(150px, min(14vw, 29svh), 270px);
   aspect-ratio: 1145 / 1109;
 }
@@ -627,8 +643,8 @@ img {
 
 .laptop-object {
   z-index: 12;
-  right: 14%;
-  bottom: 6.5%;
+  right: 19%;
+  bottom: 6%;
   width: clamp(380px, min(24vw, 50svh), 510px);
   aspect-ratio: 1170 / 1072;
   rotate: 3deg;
@@ -638,7 +654,7 @@ img {
 
 .flowers-object {
   z-index: 13;
-  right: 33%;
+  right: 38%;
   bottom: 5.5%;
   width: clamp(110px, min(9.5vw, 20svh), 195px);
   filter: drop-shadow(0 9px 7px rgba(57, 51, 38, 0.15));
@@ -668,7 +684,7 @@ img {
 .pencil-tool {
   position: absolute;
   z-index: 4;
-  bottom: 10%;
+  bottom: 6%;
   left: 8%;
   width: 36%;
   aspect-ratio: 1;
@@ -1303,12 +1319,11 @@ img {
   .hero-title { font-size: 20px; }
   .hero-title-sizer-name,
   .hero-title-name { font-size: 84px; }
-  .sticky-object { right: 1.5%; width: 34vw; }
-  .sticky-copy { top: 18.5%; left: 9.5%; width: 81%; font-size: clamp(15px, 1.38vw, 19px); line-height: 1.46; }
-  .ticket-object { left: 25%; width: clamp(400px, 47vw, 560px); bottom: 10%; }
-  .turntable-object { left: 3%; width: clamp(145px, 17vw, 210px); }
-  .laptop-object { right: 11%; width: 31vw; bottom: 8%; }
-  .flowers-object { right: 31%; bottom: 7%; width: 11vw; }
+  .sticky-object { right: 4.5%; width: 46vw; }
+  .ticket-object { left: 20%; width: clamp(400px, 47vw, 560px); bottom: 10%; }
+  .turntable-object { left: -2%; width: clamp(145px, 17vw, 210px); }
+  .laptop-object { right: 16%; width: 31vw; bottom: 8%; }
+  .flowers-object { right: 36%; bottom: 7%; width: 11vw; }
   .bling-object { width: 34vw; }
   .portfolio-gems { width: 36vw; }
   .portfolio-gems-left { left: -35%; }
@@ -1367,23 +1382,18 @@ img {
   }
 
   .sticky-object {
-    top: 39.2%;
-    right: -3.5%;
-    width: min(370px, 88vw);
-    transform: rotate(4deg);
-  }
-
-  .sticky-copy {
-    top: 16.5%;
-    left: 7%;
-    width: 86%;
-    font-size: clamp(14px, 4.15vw, 18px);
-    line-height: 1.42;
+    position: relative;
+    top: auto;
+    right: auto;
+    left: 2%;
+    width: clamp(280px, 90vw, 420px);
+    margin-top: 2svh;
+    transform: rotate(0deg);
   }
 
   .ticket-object {
     bottom: 24%;
-    left: 4%;
+    left: -1%;
     width: 88vw;
   }
 
@@ -1396,19 +1406,19 @@ img {
   .turntable-object {
     z-index: 14;
     bottom: 2.5%;
-    left: 2.5%;
+    left: -2.5%;
     width: 128px;
   }
 
   .laptop-object {
-    right: -7%;
-    bottom: 1.5%;
+    right: -2%;
+    bottom: 2%;
     width: 104vw;
   }
 
   .flowers-object {
     z-index: 13;
-    right: 9%;
+    right: 14%;
     bottom: 21%;
     width: 25vw;
   }
@@ -1596,7 +1606,6 @@ img {
     gap: 10px;
     font-size: 8px;
   }
-
   .loader-stage {
     width: 100vw;
   }
@@ -1640,3 +1649,5 @@ img {
     transition-duration: 0.01ms !important;
   }
 }
+
+
